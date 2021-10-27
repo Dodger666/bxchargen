@@ -245,6 +245,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           inv.push(choose(armor));
           inv.push(choose(dwarf_melee_weapons));
           inv.push(choose(dwarf_ranged));
+		  inv.push('bouclier');
           return inv;
         }
       }
@@ -569,13 +570,13 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
               }
             }
             prepped = wrap(consolidator(prepped).join(', '));
-            spd = `\nSPELLS PER DAY (BY LEVEL): ${spd.join(', ')}`;
-            spells = `${spd}\n\nPREPARED SPELLS:\n${prepped}\n`;
+            spd = `\nSORTS PAR JOUR (PAR NIVEAU): ${spd.join(', ')}`;
+            spells = `${spd}\n\nSORTS PREPARE:\n${prepped}\n`;
           } else if (this.char_class.name === 'Magicien'
                      || this.char_class.name === 'Elfe') {
             const spd = mu_spells_per_day[this.level].slice(1).join(', ');
             const book = generate_spellbook(this.level);
-            spells = `\nSPELLS PER DAY (BY LEVEL): ${spd}\n\nSPELLBOOK:\n${book}\n`;
+            spells = `\nSORTS PAR JOUR (PAR NIVEAU): ${spd}\n\nLIVRE DE SORTS:\n${book}\n`;
           }
           return `
 ${name_bit}Profession: ${this.background}
