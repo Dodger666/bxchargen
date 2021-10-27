@@ -190,12 +190,12 @@
         }
         say_abis() {
           return `
-Strength:     ${("  " + this.strength).slice(-2)} ${this.strmod}
-Dexterity:    ${("  " + this.dexterity).slice(-2)} ${this.dexmod}
+Force:        ${("  " + this.strength).slice(-2)} ${this.strmod}
+Dextérité:    ${("  " + this.dexterity).slice(-2)} ${this.dexmod}
 Constitution: ${("  " + this.constitution).slice(-2)} ${this.conmod}
 Intelligence: ${("  " + this.intelligence).slice(-2)} ${this.intmod}
-Wisdom:       ${("  " + this.wisdom).slice(-2)} ${this.wismod}
-Charisma:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
+Sagesse:      ${("  " + this.wisdom).slice(-2)} ${this.wismod}
+Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
         }
 
       }
@@ -203,7 +203,7 @@ Charisma:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 
       class Cleric {
         constructor() {
-          this.name = "Cleric";
+          this.name = "Clerc";
 	  this.hd = 6;
 	  this.max_level = 14;
           this.xp_progression = [1500, 3000, 6000, 12000, 25000, 50000,
@@ -218,6 +218,7 @@ Charisma:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           var inv = ['eau bénite', 'symbole sacré'];
           inv.push(choose(armor));
           inv.push(choose(['masse d\'arme', 'baton', 'marteau de guerre']));
+		  inv.push('bouclier');
           return inv;
         }
       }
@@ -401,9 +402,14 @@ Charisma:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 
       cleric_spells = [
         null,
-        ['cure light wounds', 'detect evil', 'detect magic', 'light',
-         'protection from evil', 'purify food and water', 'remove fear',
-         'resist cold'],
+        ["Anéantissement de la peur (Peur)",
+"Détection de la magie",
+"Détection du mal",
+"Guérison des blessures légères (Blessures légères)",
+"Lumière (Ténèbres)",
+"Protection contre le mal",
+"Purification de l’eau et des aliments",
+"Résistance au froid"],
         ['bless', 'find traps', 'hold person', 'know alignment', 'resist fire',
          'silence (15\') radius', 'snake charm', 'speak with animals'],
         ['continual light', 'cure disease', 'growth of animal',
@@ -495,7 +501,7 @@ Charisma:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
               this.encumbrance += encumbrances[k];
             }
           }
-          inv_array.push(`gold pieces (${coins})`);
+          inv_array.push(`pièces d\'or' (${coins})`);
           inv_array.sort();
           var inv = inv_array.join(', ');
           inv = wrap(inv, 120);
@@ -514,47 +520,47 @@ Charisma:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
         }
         get ac() {
 	  var inv = this.inventory.replace(/\n/g, ' ')
-          if (inv.includes('plate mail')) {
+          if (inv.includes('armure de plates')) {
             var base_ac = 3;
-          } else if (inv.includes('chain mail')) {
+          } else if (inv.includes('cotte de mailles')) {
             var base_ac = 5;
-          } else if (inv.includes('gambeson')) {
+          } else if (inv.includes('cuir')) {
             var base_ac = 7;
           } else {
             var base_ac = 9;
           }
-          if (this.inventory.includes('shield')) {
-            base_ac -= 1;
+          if (this.inventory.includes('bouclier')) {
+            base_ac += 1;
           }
-          return base_ac - Number(this.abis.dexmod);
+          return 19 - base_ac + Number(this.abis.dexmod);
         }
         get base_thac0() {
-          return this.char_class.thaco_array[this.level]
+          return 19 - this.char_class.thaco_array[this.level]
         }
         get melee_thac0() {
-          return this.base_thac0 - Number(this.abis.strmod);
+          return this.base_thac0 + Number(this.abis.strmod);
         }
         get ranged_thac0() {
           var hobbit_bonus = 0
           if (this.char_class.name === 'Halfling') {
             hobbit_bonus = 1
           }
-          return this.base_thac0 - Number(this.abis.dexmod) - hobbit_bonus;
+          return this.base_thac0 + Number(this.abis.dexmod) + hobbit_bonus;
         }
         get character_sheet() {
           const ncol = 23;
-          var name_bit = `Name: ${this.name}`.padEnd(ncol);
-          var level_bit = `Level: ${this.level}`.padEnd(ncol);
-          var class_bit = `Class: ${this.char_class.name}`.padEnd(ncol);
+          var name_bit = `Nom: ${this.name}`.padEnd(ncol);
+          var level_bit = `Niveau: ${this.level}`.padEnd(ncol);
+          var class_bit = `Classe: ${this.char_class.name}`.padEnd(ncol);
           var statblock = this.abis.say_abis().split('\n');
-          statblock[1] += `    HP: ${this.hp}`;
-          statblock[2] += `    AC: ${this.ac}`;
-          statblock[3] += `    THAC0 (melee): ${this.melee_thac0}`;
-          statblock[4] += `    THAC0 (ranged): ${this.ranged_thac0}`;
+          statblock[1] += `    PV: ${this.hp}`;
+          statblock[2] += `    CA: ${this.ac}`;
+          statblock[3] += `    Bonus (melee): ${this.melee_thac0}`;
+          statblock[4] += `    Bonus (distance): ${this.ranged_thac0}`;
           statblock[5] += `    MOVEMENT: ${this.move}`;
           statblock[6] += `    XP: ${this.xp}`;
           var spells = '';
-          if (this.char_class.name === 'Cleric') {
+          if (this.char_class.name === 'Clerc') {
             var spd = cleric_spells_per_day[this.level].slice(1);
             var prepped = [];
             for (i = 1; i < 6; i++) {
@@ -565,26 +571,26 @@ Charisma:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
             prepped = wrap(consolidator(prepped).join(', '));
             spd = `\nSPELLS PER DAY (BY LEVEL): ${spd.join(', ')}`;
             spells = `${spd}\n\nPREPARED SPELLS:\n${prepped}\n`;
-          } else if (this.char_class.name === 'Magic user'
-                     || this.char_class.name === 'Elf') {
+          } else if (this.char_class.name === 'Magicien'
+                     || this.char_class.name === 'Elfe') {
             const spd = mu_spells_per_day[this.level].slice(1).join(', ');
             const book = generate_spellbook(this.level);
             spells = `\nSPELLS PER DAY (BY LEVEL): ${spd}\n\nSPELLBOOK:\n${book}\n`;
           }
           return `
-${name_bit}Background: ${this.background}
-${level_bit}Appearance: ${this.appearance}
-${class_bit}Personality: ${this.personality}
+${name_bit}Profession: ${this.background}
+${level_bit}Aparence: ${this.appearance}
+${class_bit}Personalité: ${this.personality}
 ${statblock.join('\n')}
 
-SPECIAL ABILITIES:
+ABILITES SPECIALES:
 ${this.char_class.specs}
 ${spells}
-EQUIPMENT:
+EQUIPEMENT:
 ${this.inventory}
 
-ENCUMBRANCE:
-${this.encumbrance} coins-weight`;
+ENCOMBREMENT:
+${this.encumbrance} pièces`;
         }
       }
     </script>
@@ -598,12 +604,12 @@ ${this.encumbrance} coins-weight`;
       <label for="classy">Class: </label>
       <select name="classy" id="classy">
         <option value="rando">rando</option>
-        <option value="cleric">cleric</option>
-        <option value="dwarf">dwarf</option>
-        <option value="elf">elf</option>
-        <option value="fighter">fighter</option>
+        <option value="cleric">clerc</option>
+        <option value="dwarf">nain</option>
+        <option value="elf">elfe</option>
+        <option value="fighter">guerrier</option>
         <option value="halfling">halfling</option>
-        <option value="magic user">magic user</option>
+        <option value="magic user">magicien</option>
         <option value="thief">thief</option>
       </select>
       <button onclick="roll_up_char(document.getElementById('level').value, document.getElementById('classy').value)">Let's roll!</button>
