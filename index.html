@@ -23,7 +23,7 @@
         'hache': 30, 'javelin': 20, 'arc long (20 flèches)': 30, 'masse d\'arme': 30,'hallebarde': 150, 'arc court (20 flèches)': 30, 'dague en argent': 10,
         'fronde (30 pierres)': 20, 'lance': 30, 'baton': 40, 'épée': 60,
         'épée courte': 30, 'épée à deux mains': 150, 'marteau de guerre': 30,
-        cuir: 200, 'cotte de mailles': 400, 'armure de plates': 500, 'bouclier': 100
+        'cuir': 200, 'cotte de mailles': 400, 'armure de plates': 500, 'bouclier': 100
       };
 
       const appearances = ["aquilin", "athlétique", "poitrine en tonneau", "osseux",
@@ -502,7 +502,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
               this.encumbrance += encumbrances[k];
             }
           }
-          inv_array.push(`pièces d\'or' (${coins})`);
+          inv_array.push(`pièces d\'or (${coins})`);
           inv_array.sort();
           var inv = inv_array.join(', ');
           inv = wrap(inv, 120);
