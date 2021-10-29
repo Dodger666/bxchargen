@@ -35,6 +35,26 @@
                            "affaissé", "solide", "à la mâchoire carrée", "statuesque",
                            "imposant", "élancé", "usé", "sâle", "nerveux",
                            "ridée"]
+	  
+	  const languages = ['Doppelgänger',
+'Dragon',
+'Elfique',
+'Gargouille',
+'Gnoll',
+'Gnome',
+'Gobelin',
+'Gobelours',
+'Harpie',
+'Hobgobelin',
+'Homme-lézard',
+'Kobold',
+'Minotaure',
+'Méduse',
+'Nain',
+'Ogre',
+'Orque',
+'Pixie',
+'Halfling']
 
       function get_appearance() {
         return choose(appearances);
@@ -152,6 +172,22 @@
         return selected.join(', ');
 
       }
+	  
+	  function get_xp_bonus_single(prime_abi){
+	  var bonus = [null,null,null,'-20%','-20%','-20%','-10%','-10%','-10%','0%','0%','0%','0%','+5%','+5%','+5%','+10%','+10%','+10%' ];
+	  return bonus[prime_abi];}
+	  
+	  function get_xp_bonus_elf(intelligence, strength){
+		  if (intelligence >= 16 && strength>=13) {return '+10%'};
+		  if (intelligence >= 13 && strength>=13) {return '+5%'};
+		  return '0%'
+	  }
+	  function get_xp_bonus_halfling(dex, strength){
+		  if (dex >= 16 && strength>=16) {return '+10%'};
+		  if (dex >= 13 || strength>=13) {return '+5%'};
+		  return '0%'
+	  }
+	  
 //#endregion funtions 
 
       class Abilities {
@@ -211,7 +247,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 
 
       class Cleric {
-        constructor() {
+        constructor(abis) {
           this.name = "Clerc";
 	  this.hd = 6;
 	  this.max_level = 14;
@@ -223,6 +259,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.post_name_level_hp_gain = 1;
           this.specs = wrap('Armures : toutes, boucliers compris. Armes : toutes les armes contondantes. Magie Divine. Vade Retro. Langues : langue d\’alignement, commun');
 		  this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1' };
+		  this.xp_bonus = get_xp_bonus_single(abis.wisdom)
         }
         class_equipment() {
           var inv = ['eau bénite', 'symbole sacré'];
@@ -235,7 +272,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 
 
       class Dwarf {
-        constructor() {
+        constructor(abis) {
           this.name = "Nain";
 	  this.hd = 8;
 	  this.max_level = 12;
@@ -246,6 +283,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.post_name_level_hp_gain = 3;
           this.specs = wrap('Armures : toutes, boucliers compris. Armes : petites ou normales uniquement. Infravistion (18m). Langues: langue d\’alignement, commun, nain, gnome, gobelin, kobold');
 		  this.explo = {'EP': '2','OP':'0', 'PS':'2','TP':'2' };
+		  this.xp_bonus = get_xp_bonus_single(abis.strength)
 		}
         class_equipment() {
           var inv = [];
@@ -263,7 +301,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 
 
       class Elf {
-        constructor() {
+        constructor(abis) {
           this.name = "Elfe";
 	  this.hd = 6;
 	  this.max_level = 10;
@@ -273,6 +311,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.post_name_level_hp_gain = 2;
           this.specs = wrap('Magie Arcanique. Les elfes peuvent utiliser tous les types d’armes et d’armures. Immunité à la paralysie des goules. Infravision (18m). Langues : langue d\’alignement, commun, elfique, gnoll, hobgobelin, orque');
           this.explo = {'EP': '2','OP':'0', 'PS':'2','TP':'1' };
+		  this.xp_bonus = get_xp_bonus_elf(abis.intelligence, abis.strength)
 		}
         class_equipment() {
           var inv = ['spellbook'];
@@ -286,7 +325,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 
 
       class Fighter {
-        constructor() {
+        constructor(abis) {
           this.name = "Guerrier";
 	  this.hd = 8;
 	  this.max_level = 14;
@@ -298,6 +337,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.post_name_level_hp_gain = 2;
           this.specs = wrap('Armures : toutes, boucliers compris, Armes : toutes, Enchainement: peut touchez plusieurs adversaires, Langues : langue d\’alignement, commun');
           this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1' };
+		  this.xp_bonus = get_xp_bonus_single(abis.strength)
 		}
         class_equipment() {
           var inv = [];
@@ -315,7 +355,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 
 
       class Halfling {
-        constructor() {
+        constructor(abis) {
           this.name = "Halfling";
 	  this.hd = 6;
 	  this.max_level = 8;
@@ -325,6 +365,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.post_name_level_hp_gain = 0;
           this.specs = wrap('Armures : toutes (de tailles appropriées), bouclier compris. Armes : toutes (de taille appropriée). +2 en CA contre les grandes créature. 90% chance de se cacher dans les bois; 2-in-6 de se cacher dans l\'ombre en donjon. +1 aux jets d’attaque avec des projectiles. Langues : langue d\’alignement, commun, halfling');
           this.explo = {'EP': '2','OP':'0', 'PS': '1','TP':'1' };
+		  this.xp_bonus = get_xp_bonus_halfling(abis.dexterity, abis.strength)
 		}
         class_equipment() {
           var inv = [];
@@ -339,7 +380,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 
 
       class MagicUser {
-        constructor() {
+        constructor(abis) {
           this.name = "Magicien";
 	  this.hd = 4;
 	  this.max_level = 14;
@@ -351,6 +392,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.post_name_level_hp_gain = 1;
           this.specs = wrap('Magie Arcanique. Armures : aucune. Armes : dagues, baton. Langues : langue d\’alignement, commun');
           this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1' };
+		  this.xp_bonus = get_xp_bonus_single(abis.intelligence)
 		}
         class_equipment() {
           var inv = ['livre de sorts', 'dague', 'baton'];
@@ -360,7 +402,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 
 
       class Thief {
-        constructor() {
+        constructor(abis) {
           this.name = "Voleur";
 	  this.hd = 4;
 	  this.max_level = 14;
@@ -372,6 +414,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.post_name_level_hp_gain = 2;
           this.specs = wrap('Armures : cuir, pas de bouclier. Armes : toutes. Quand il attaque par derrière un adversaire qui ne s’y attend pas, le voleur reçoit un bonus de +4 à l’attaque et double les dégâts infligés. Langues : langue d\’alignement, commun');
           this.explo = {'EP': '2','OP':'0', 'PS': '1','TP':'1' };
+		  this.xp_bonus = get_xp_bonus_single(abis.dexterity)
 		}
         class_equipment() {
           var inv = ['outils de voleur', 'cuir'];
@@ -498,16 +541,17 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
       class Character {
         constructor(name='', abis=null, char_class=null) {
           this.name = name;
-	  if (char_class === null) {
-            this.char_class = new Fighter();
-          } else {
-            this.char_class = new char_class;
-          }
-	  if (abis === null) {
-            this.abis = new Abilities();
-          } else {
-            this.abis = abis;
-          }
+	  
+	  		if (abis === null) {
+          	  this.abis = new Abilities();
+         	 } else {
+          	   this.abis = abis;
+          	}
+		  if (char_class === null) {
+	            this.char_class = new Fighter(this.abis);
+	          } else {
+	            this.char_class = new char_class(this.abis);
+	          }
           this.background = get_background();
           this.personality = get_personality();
           this.level = 1;
@@ -597,7 +641,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           statblock[3] += `    Bonus (melee): ${this.melee_thac0}`;
           statblock[4] += `    Bonus (distance): ${this.ranged_thac0}`;
           statblock[5] += `    MOVEMENT: ${this.move}`;
-          statblock[6] += `    XP: ${this.xp}`;
+          statblock[6] += `    XP: ${this.xp} / Bonus: ${this.char_class.xp_bonus}`;
           var spells = '';
           if (this.char_class.name === 'Clerc') {
             var spd = cleric_spells_per_day[this.level].slice(1);
