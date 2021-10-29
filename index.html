@@ -674,13 +674,13 @@ ${this.encumbrance} pièces`;
       }
     </script>
   </head>
-  <body onload="roll_up_char()">
+  <body onload="roll_up_char(1, 'rando', 'Truc')">
     <div style="max-width:500px; margin:auto">
 		<img style="max-width:500px; margin:auto" src='https://cdn.shopify.com/s/files/1/0017/2330/1933/files/Website_Front_Page_-_OSE_Title_Banner_2048x.png'/>
-      <p style="font-family:'IM Fell DW Pica';text-align:justify;">Ces personnages sont pour <a href="https://oldschoolessentials.necroticgnome.com/srd/index.php/Main_Page">OSE</a> avec Niveau 1: Max PV, Clerc 1 sort/niv1, livre de sort modifié par l'int </p>
+      <p style="font-family:'IM Fell DW Pica';text-align:justify;">Ces personnages sont pour <a href="https://oldschoolessentials.necroticgnome.com/srd/index.php/Main_Page">OSE</a> avec Niveau 1: Max PV, Clerc 1 sort/niv1, livre de sort modifié par l'intelligence</p>
       <label for="level">Niveau: </label>
       <input type="number" name="level" id="level" value=1  style="width:3em">
-      <label for="classy">Class: </label>
+      <label for="classy">Classe: </label>
       <select name="classy" id="classy">
         <option value="rando">aléatoire</option>
         <option value="cleric">clerc</option>
@@ -691,11 +691,13 @@ ${this.encumbrance} pièces`;
         <option value="magic user">magicien</option>
         <option value="thief">voleur</option>
       </select>
-      <button onclick="roll_up_char(document.getElementById('level').value, document.getElementById('classy').value)">Let's roll!</button>
+      <label for="name">Nom: </label>
+      <input type="text" name="name" id="name" value=Truc  style="width:6em">
+      <button onclick="roll_up_char(document.getElementById('level').value, document.getElementById('classy').value, document.getElementById('name').value)">Rouler</button>
       <pre id="sheet" style="font-family: 'Courier Prime', monospace;font-size:0.87em;"></pre>
     </div>
     <script>
-      function roll_up_char (level=1, cls='rando') {
+      function roll_up_char (level=1, cls='rando', name) {
         var abis = new Abilities();
         if (cls === 'rando') {
           max_abi = Math.max(...abis.abi_list);
@@ -736,7 +738,7 @@ ${this.encumbrance} pièces`;
           'magic user': MagicUser,
           thief: Thief
         }
-        var new_char = new Character('', abis, classes[cls]);
+        var new_char = new Character(name, abis, classes[cls]);
         for (i = 0; i < level - 1; i++) {
           new_char.level_up()
         }
