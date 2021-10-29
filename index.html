@@ -2,10 +2,10 @@
 <html>
   <head>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Eagle+Lake&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=0.75" charset="utf-8"/>
     <script>
+//#region funtions 
       var essential_items = ['sac à dos', 'pierre à feu', 'outre', 'rations (7)'];
       var light_source_items = ['lanterne ( 2 flasques d\'huile)', 'torches (6)'];
       var mundane_items = ['petit marteau', 'gros clous (12)', 'mirroir',
@@ -152,7 +152,7 @@
         return selected.join(', ');
 
       }
-
+//#endregion funtions 
 
       class Abilities {
         constructor () {
@@ -221,7 +221,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.thaco_array = [20, 19, 19, 19, 19, 17, 17, 17, 17, 14, 14, 14,
                               14, 12, 12]
           this.post_name_level_hp_gain = 1;
-          this.specs = wrap('Armures : toutes, boucliers compris, Armes : toutes les armes contondantes. Magie Divine. Vade Retro.');
+          this.specs = wrap('Armures : toutes, boucliers compris. Armes : toutes les armes contondantes. Magie Divine. Vade Retro. Langues : langue d\’alignement, commun');
 		  this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1' };
         }
         class_equipment() {
@@ -244,14 +244,14 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.thaco_array = [20, 19, 19, 19, 17, 17, 17, 14, 14, 14,
                               12, 12, 12];
           this.post_name_level_hp_gain = 3;
-          this.specs = wrap('Armures : toutes, boucliers compris. Armes : petites ou normales uniquement. Infravistion (18m).');
+          this.specs = wrap('Armures : toutes, boucliers compris. Armes : petites ou normales uniquement. Infravistion (18m). Langues: langue d\’alignement, commun, nain, gnome, gobelin, kobold');
 		  this.explo = {'EP': '2','OP':'0', 'PS':'2','TP':'2' };
 		}
         class_equipment() {
           var inv = [];
-          var dwarf_melee_weapons = ['axe', 'hand axe', 'dagger',
-                                     'short sword', 'sword', 'mace',
-                                     'club', 'spear', 'war hammer'];
+          var dwarf_melee_weapons = ['hache', 'hache de guerre', 'dague',
+                                     'épée courte', 'épée', 'masse d\'arme',
+                                     'gourdin', 'lance', 'marteau de guerre'];
           var dwarf_ranged = ranged_weapons.filter(k => !k.includes('long'));
           inv.push(choose(armor));
           inv.push(choose(dwarf_melee_weapons));
@@ -271,7 +271,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
                                  250000, 400000, 600000];
           this.thaco_array = [20, 19, 19, 19, 17, 17, 17, 14, 14, 14, 12]
           this.post_name_level_hp_gain = 2;
-          this.specs = wrap('Magie Arcanique. Les elfes peuvent utiliser tous les types d’armes et d’armures. Immunité à la paralysie des goules. Infravision (18m).');
+          this.specs = wrap('Magie Arcanique. Les elfes peuvent utiliser tous les types d’armes et d’armures. Immunité à la paralysie des goules. Infravision (18m). Langues : langue d\’alignement, commun, elfique, gnoll, hobgobelin, orque');
           this.explo = {'EP': '2','OP':'0', 'PS':'2','TP':'1' };
 		}
         class_equipment() {
@@ -279,6 +279,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           inv.push(choose(armor));
           inv.push(choose(melee_weapons));
           inv.push(choose(ranged_weapons));
+		  inv.push('bouclier');
           return inv;
         }
       }
@@ -295,7 +296,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.thaco_array = [20, 19, 19, 19, 17, 17, 17, 14, 14, 14, 12, 12,
                               12, 10, 10]
           this.post_name_level_hp_gain = 2;
-          this.specs = wrap('Proficient with all armor, weapons, and shields.');
+          this.specs = wrap('Armures : toutes, boucliers compris, Armes : toutes, Enchainement: peut touchez plusieurs adversaires, Langues : langue d\’alignement, commun');
           this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1' };
 		}
         class_equipment() {
@@ -303,9 +304,9 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           inv.push(choose(armor));
           var melee_weapon = choose(melee_weapons);
           inv.push(melee_weapon);
-          var big_weapons = ['two-handed sword', 'pole arm', 'battle axe'];
+          var big_weapons = ['épée à deux mains', 'hallebarde', 'hache de guerre'];
           if (!big_weapons.includes(melee_weapon)) {
-            inv.push('shield');
+            inv.push('bouclier');
           }
           inv.push(choose(ranged_weapons));
           return inv;
@@ -322,14 +323,12 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
                                  120000]
           this.thaco_array = [20, 19, 19, 19, 17, 17, 17, 14, 14, 14]
           this.post_name_level_hp_gain = 0;
-          this.specs = wrap('Proficient with all weapons and armor, but they must be tailored to a halfling\'s small stature. +2 to AC vs. large creatures. 90% chance to hide in the woods; 2-in-6 in dungeons. 2-in-6 chance to hear subtle sounds. +1 to hit for ranged attacks.');
+          this.specs = wrap('Armures : toutes (de tailles appropriées), bouclier compris. Armes : toutes (de taille appropriée). +2 en CA contre les grandes créature. 90% chance de se cacher dans les bois; 2-in-6 de se cacher dans l\'ombre en donjon. +1 aux jets d’attaque avec des projectiles. Langues : langue d\’alignement, commun, halfling');
           this.explo = {'EP': '2','OP':'0', 'PS': '1','TP':'1' };
 		}
         class_equipment() {
           var inv = [];
-          var dwarf_melee_weapons = ['axe', 'hand axe', 'dagger',
-                                     'short sword', 'sword', 'mace',
-                                     'club', 'spear', 'war hammer'];
+          var dwarf_melee_weapons = ['hache', 'dague', 'épée courte', 'masse d\'arme','gourdin', 'lance', 'marteau de guerre'];					 
           var dwarf_ranged = ranged_weapons.filter(k => !k.includes('long'));
           inv.push(choose(armor));
           inv.push(choose(dwarf_melee_weapons));
@@ -350,11 +349,11 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.thaco_array = [20, 19, 19, 19, 19, 19, 17, 17, 17, 17, 17, 14,
                               14, 14, 14]
           this.post_name_level_hp_gain = 1;
-          this.specs = wrap('Spellcasting. May not wear armor. Dagger is sole weapon.');
+          this.specs = wrap('Magie Arcanique. Armures : aucune. Armes : dagues, baton. Langues : langue d\’alignement, commun');
           this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1' };
 		}
         class_equipment() {
-          var inv = ['spellbook', 'dagger'];
+          var inv = ['livre de sorts', 'dague', 'baton'];
           return inv;
         }
       }
@@ -371,7 +370,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.thaco_array = [20, 19, 19, 19, 19, 17, 17, 17, 17, 14, 14, 14,
                               14, 12, 12]
           this.post_name_level_hp_gain = 2;
-          this.specs = wrap('May back-stab at +4 to hit and 2x damage. Proficient with all weapons, but only light armor. 80% chance to decipher languages at level 4+. 90% chance to use scrolls from level 10+. Able to climb sheer surfaces, find or remove treasure traps, hear subtle noises, hide in shadows, move silently, open locks, and pick pockets.');
+          this.specs = wrap('Armures : cuir, pas de bouclier. Armes : toutes. Quand il attaque par derrière un adversaire qui ne s’y attend pas, le voleur reçoit un bonus de +4 à l’attaque et double les dégâts infligés. Langues : langue d\’alignement, commun');
           this.explo = {'EP': '2','OP':'0', 'PS': '1','TP':'1' };
 		}
         class_equipment() {
@@ -440,9 +439,18 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 
       mu_spells = [
         null,
-        ['charm person', 'detect magic', 'floating disc', 'hold portal', 'light',
-         'magic missile', 'protection from evil', 'read languages', 'read magic',
-         'shield', 'sleep', 'ventriloquism'],
+        ['Bouclier',
+		  'Charme-personne',
+		  'Détection de la magie',
+		  'Disque flottant',
+		  'Fermeture',
+		  'Lecture de la magie',
+		  'Lecture des langues',
+		  'Lumière (Ténèbres)',
+		  'Projectile magique',
+		  'Protection from Evil',
+		  'Sommeil',
+		  'Ventriloquisme'],
         ['continual light', 'detect evil', 'detect invisible', 'ESP',
          'invisibility', 'knock', 'levitate', 'locate object', 'mirror image',
          'phantasmal force', 'web', 'wizard lock'],
@@ -462,8 +470,18 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
          'projected image', 'reincarnation', 'stone to flesh'],
       ]
 
-      function generate_spellbook(caster_level) {
+      function generate_spellbook(caster_level, intelligence) {
         var spells = [];
+		var nb_spells = [null,null, null, 1,1,1,2,2,2,2,3,3,3,3,3,4,4,4,5]
+		if (caster_level == 1){
+			 var available_spells = mu_spells[1];
+			 for (i = 1; i <= nb_spells[intelligence]; i++){
+			lvl_1_spells = mu_spells_per_day[caster_level][i]
+		    var random_spell = choose(available_spells);
+			spells.push(random_spell);
+			available_spells = available_spells.filter(k => k !== random_spell);
+		}
+		}else{
         for (i = 1; i < 7; i++) {
           var available_spells = mu_spells[i];
           for (k = 0; k < mu_spells_per_day[caster_level][i]; k++) {
@@ -472,6 +490,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
             available_spells = available_spells.filter(k => k !== random_spell);
           }
         }
+	}
         return wrap(spells.join(', '));
       }
 
@@ -529,13 +548,13 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
         }
         get move(){
           if (this.encumbrance > 800) {
-            return '30\' (10\')';
+            return '9m (3m)';
           } else if (this.encumbrance > 600) {
-            return '60\' (20\')'
+            return '12m (6m)'
           } else if (this.encumbrance > 400) {
-            return '90\' (30\')'
+            return '27m (9m)'
           } else {
-            return '120\' (40\')'
+            return '36m (12m)'
           }
         }
         get ac() {
@@ -582,19 +601,11 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           var spells = '';
           if (this.char_class.name === 'Clerc') {
             var spd = cleric_spells_per_day[this.level].slice(1);
-            var prepped = [];
-            for (i = 1; i < 6; i++) {
-              for (var j = 0; j < spd[i-1]; j++) {
-                prepped.push(choose(cleric_spells[i]));
-              }
-            }
-            prepped = wrap(consolidator(prepped).join(', '));
-            spd = `\nSORTS PAR JOUR (PAR NIVEAU): ${spd.join(', ')}`;
-            spells = `${spd}\n\nSORTS PREPARE:\n${prepped}\n`;
+            spells = `\nSORTS PAR JOUR (PAR NIVEAU): ${spd.join(', ')}\n`;
           } else if (this.char_class.name === 'Magicien'
                      || this.char_class.name === 'Elfe') {
             const spd = mu_spells_per_day[this.level].slice(1).join(', ');
-            const book = generate_spellbook(this.level);
+            const book = generate_spellbook(this.level, this.abis.intelligence);
             spells = `\nSORTS PAR JOUR (PAR NIVEAU): ${spd}\n\nLIVRE DE SORTS:\n${book}\n`;
           }
           return `
@@ -602,6 +613,10 @@ ${name_bit}Profession: ${this.background}
 ${level_bit}Aparence: ${this.appearance}
 ${class_bit}Personalité: ${this.personality}
 ${statblock.join('\n')}
+
+EXPLORATION:
+Ecouter aux portes: ${this.char_class.explo['EP']}-6, Ouverture des portes: ${this.char_class.explo['OP']}-6, 
+Trouver portes secrètes: ${this.char_class.explo['PS']}-6, Trouver pièges de salle: ${this.char_class.explo['TP']}-6
 
 ABILITES SPECIALES:
 ${this.char_class.specs}
@@ -617,13 +632,13 @@ ${this.encumbrance} pièces`;
   </head>
   <body onload="roll_up_char()">
     <div style="max-width:500px; margin:auto">
-      <h1 style="font-family:'Eagle Lake';text-align:center;">Générateur de Personnages pour OSE</h1>
-      <p style="font-family:'IM Fell DW Pica';text-align:justify;">Ces personnages sont pour<a href="https://oldschoolessentials.necroticgnome.com/srd/index.php/Main_Page">1981 B/X</a> avec Niveau 1: Max PV et Clerc 1 sort</p>
-      <label for="level">Level: </label>
+		<img style="max-width:500px; margin:auto" src='https://cdn.shopify.com/s/files/1/0017/2330/1933/files/Website_Front_Page_-_OSE_Title_Banner_2048x.png'/>
+      <p style="font-family:'IM Fell DW Pica';text-align:justify;">Ces personnages sont pour <a href="https://oldschoolessentials.necroticgnome.com/srd/index.php/Main_Page">OSE</a> avec Niveau 1: Max PV, Clerc 1 sort/niv1, livre de sort modifié par l'int </p>
+      <label for="level">Niveau: </label>
       <input type="number" name="level" id="level" value=1  style="width:3em">
       <label for="classy">Class: </label>
       <select name="classy" id="classy">
-        <option value="rando">rando</option>
+        <option value="rando">aléatoire</option>
         <option value="cleric">clerc</option>
         <option value="dwarf">nain</option>
         <option value="elf">elfe</option>
