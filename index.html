@@ -10,7 +10,7 @@
       var light_source_items = ['lanterne ( 2 flasques d\'huile)', 'torches (6)'];
       var mundane_items = ['petit marteau', 'gros clous (12)', 'mirroir',
                            'corde (15 m)', 'grand sac', 'petit sac',
-                           'wolfsbane', 'perche de 3m'];
+                           'wolfsbane', 'perche de 3m', 'caltrop (6)'];
       var melee_weapons = ['hache de guerre', 'hache', 'dague', 'dague en argent',
                            'épée courte', 'épée', 'épée à deux mains', 'masse d\'arme', 'gourdin', 'hallebarde', 'lance', 'marteau de guerre', 'baton'];
       var ranged_weapons = ['arbalète (30 quarreaux)', 'arc long (20 flèches)',
@@ -165,6 +165,12 @@
           this.mod = [null, null, null, '-3', '-2', '-2', '-1', '-1', 
                       '-1', '  ', '  ', '  ', '  ', '+1', '+1', '+1',
                       '+2', '+2', '+3'];
+          this.mod_cha = [null, null, null, '-2', '-1', '-1', '-1', '-1', 
+                      '-1', '  ', '  ', '  ', '  ', '+1', '+1', '+1',
+                      '+1', '+1', '+2'];
+          this.explo_open_door = [null, null, null, '1', '1', '1', '1', '1', 
+                      '1', '2', '2', '2', '2', '3', '3', '3',
+                      '4', '4', '5'];
         }
         get abi_list() {
           return [this.strength, this.dexterity, this.constitution,
@@ -186,7 +192,10 @@
           return this.mod[this.wisdom]
         }
         get chamod() {
-          return this.mod[this.charisma]
+          return this.mod_cha[this.charisma]
+        }
+        get open_door_chance() {
+          return this.explo_open_door[this.strength]
         }
         say_abis() {
           return `
@@ -480,6 +489,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.hp = this.char_class.hd + Number(this.abis.conmod);
           this.inventory = this.generate_inventory();
           this.appearance = get_appearance();
+		  this.explo_ep = 
         }
         level_up() {
           if (this.level < this.char_class.max_level) {
@@ -599,7 +609,7 @@ ${this.encumbrance} pièces`;
   <body onload="roll_up_char()">
     <div style="max-width:500px; margin:auto">
       <h1 style="font-family:'Eagle Lake';text-align:center;">Générateur de Personnages pour OSE</h1>
-      <p style="font-family:'IM Fell DW Pica';text-align:justify;">Ces personnages sont <a href="https://oldschoolessentials.necroticgnome.com/srd/index.php/Main_Page">1981 B/X</a> avec Niveau 1: Max PV et Clerc 1 sort</p>
+      <p style="font-family:'IM Fell DW Pica';text-align:justify;">Ces personnages sont pour<a href="https://oldschoolessentials.necroticgnome.com/srd/index.php/Main_Page">1981 B/X</a> avec Niveau 1: Max PV et Clerc 1 sort</p>
       <label for="level">Level: </label>
       <input type="number" name="level" id="level" value=1  style="width:3em">
       <label for="classy">Class: </label>
@@ -658,11 +668,11 @@ ${this.encumbrance} pièces`;
           'magic user': MagicUser,
           thief: Thief
         }
-        var foo = new Character('', abis, classes[cls]);
+        var new_char = new Character('', abis, classes[cls]);
         for (i = 0; i < level - 1; i++) {
-          foo.level_up()
+          new_char.level_up()
         }
-        document.getElementById('sheet').innerHTML = foo.character_sheet;
+        document.getElementById('sheet').innerHTML = new_char.character_sheet;
       }
     </script>
   </body>
