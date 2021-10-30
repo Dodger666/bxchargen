@@ -293,9 +293,10 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 
       class Dwarf {
         constructor(abis) {
+			if (abis.constitution < 9){abis.constitution = 9}
           this.name = "Nain";
-	  this.hd = 8;
-	  this.max_level = 12;
+	  	  this.hd = 8;
+	  	  this.max_level = 12;
           this.xp_progression = [2200, 4400, 8800, 17000, 35000, 70000,
                                  140000, 270000, 400000, 530000, 660000]
           this.thaco_array = [20, 19, 19, 19, 17, 17, 17, 14, 14, 14,
@@ -322,6 +323,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 
       class Elf {
         constructor(abis) {
+			if (abis.intelligence < 9){abis.intelligence = 9}
           this.name = "Elfe";
 	  this.hd = 6;
 	  this.max_level = 10;
@@ -376,6 +378,8 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 
       class Halfling {
         constructor(abis) {
+			if (abis.constitution < 9){abis.constitution = 9}
+			if (abis.dexterity < 9){abis.dexterity = 9}
           this.name = "Halfling";
 	  this.hd = 6;
 	  this.max_level = 8;
@@ -435,6 +439,12 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.specs = wrap('Armures : cuir, pas de bouclier. Armes : toutes. Quand il attaque par derrière un adversaire qui ne s’y attend pas, le voleur reçoit un bonus de +4 à l’attaque et double les dégâts infligés. Langues : langue d\’alignement, commun');
           this.explo = {'EP': '2','OP':'0', 'PS': '1','TP':'1' };
 		  this.xp_bonus = get_xp_bonus_single(abis.dexterity)
+		  this.skills = {'C': 1,'DS':1, 'DD': 1,'EP':1, 'PB':2, 'PP':1, 'SC':1};
+		  var skills_lvl1 = ['C','DS', 'DD','EP', 'PB', 'PP', 'SC']
+		  this.skills[choose(skills_lvl1)] ++
+		  this.skills[choose(skills_lvl1)] ++
+		  this.skills[choose(skills_lvl1)] ++
+		  this.skills[choose(skills_lvl1)] ++
 		}
         class_equipment() {
           var inv = ['outils de voleur', 'cuir'];
