@@ -37,26 +37,6 @@
                            "imposant", "élancé", "usé", "sâle", "nerveux",
                            "ridée"]
 	  
-	  const languages = ['Doppelgänger',
-'Dragon',
-'Elfique',
-'Gargouille',
-'Gnoll',
-'Gnome',
-'Gobelin',
-'Gobelours',
-'Harpie',
-'Hobgobelin',
-'Homme-lézard',
-'Kobold',
-'Minotaure',
-'Méduse',
-'Nain',
-'Ogre',
-'Orque',
-'Pixie',
-'Halfling']
-
       function get_appearance() {
         return choose(appearances);
       }
@@ -187,6 +167,45 @@
 		  if (dex >= 16 && strength>=16) {return '+10%'};
 		  if (dex >= 13 || strength>=13) {return '+5%'};
 		  return '0%'
+	  }
+	  function get_extra_languages(intelligence, specs){
+		  var all_languages = ['Doppelgänger',
+'dragon',
+'elfique',
+'gargouille',
+'gnoll',
+'gnome',
+'gobelin',
+'gobelours',
+'harpie',
+'hobgobelin',
+'homme-lézard',
+'kobold',
+'minotaure',
+'méduse',
+'nain',
+'ogre',
+'orque',
+'pixie',
+'halfling']
+		  var nb_lang = 0
+		  if (intelligence > 12){nb_lang = 1}
+		  if (intelligence > 15){nb_lang = 2}
+		  if (intelligence > 17){nb_lang = 3}
+          var selected = [];
+		  var i = 1
+          while(i <= nb_lang) {
+            var lang = choose(all_languages);
+            if (!specs.includes(lang)){
+				selected.push(lang);
+	            all_languages = all_languages.filter(k => k !== lang);
+				i++
+            }
+          }
+		  if (selected.length > 0){
+			  return ', ' + selected.join(', ');}
+          return ''
+	  	
 	  }
 	  
 //#endregion funtions 
@@ -664,7 +683,7 @@ Ecouter aux portes: ${this.char_class.explo['EP']}-6, Ouverture des portes: ${th
 Trouver portes secrètes: ${this.char_class.explo['PS']}-6, Trouver pièges de salle: ${this.char_class.explo['TP']}-6
 
 ABILITES SPECIALES:
-${this.char_class.specs}
+${this.char_class.specs}${get_extra_languages(this.abis.intelligence, this.char_class.specs)}
 ${spells}
 EQUIPEMENT:
 ${this.inventory}
