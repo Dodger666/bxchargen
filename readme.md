@@ -1,7 +1,9 @@
 **TODO**
 
-- Exploration Skill
+- Exploration Skill kk
 - saves
-- Prime req
+- Prime req kk
 - Thief skill
-- anti hammer space
+- langue sup
+ - minimal abi check / class
+ - name ok
