@@ -2,7 +2,6 @@
 <html>
   <head>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=0.75" charset="utf-8"/>
     <script>
 //#region funtions 
@@ -636,7 +635,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           var level_bit = `Niveau: ${this.level}`.padEnd(ncol);
           var class_bit = `Classe: ${this.char_class.name}`.padEnd(ncol);
           var statblock = this.abis.say_abis().split('\n');
-          statblock[1] += `    PV: ${this.hp}`;
+          statblock[1] += `    DV: d${this.char_class.hd} / PV: ${this.hp}`;
           statblock[2] += `    CA: ${this.ac}`;
           statblock[3] += `    Bonus (melee): ${this.melee_thac0}`;
           statblock[4] += `    Bonus (distance): ${this.ranged_thac0}`;
@@ -659,7 +658,7 @@ ${class_bit}Personalité: ${this.personality}
 ${statblock.join('\n')}
 
 EXPLORATION:
-Ecouter aux portes: ${this.char_class.explo['EP']}-6, Ouverture des portes: ${this.char_class.explo['OP']}-6, 
+Ecouter aux portes: ${this.char_class.explo['EP']}-6, Ouverture des portes: ${this.char_class.explo['OP']}-6,
 Trouver portes secrètes: ${this.char_class.explo['PS']}-6, Trouver pièges de salle: ${this.char_class.explo['TP']}-6
 
 ABILITES SPECIALES:
@@ -677,10 +676,10 @@ ${this.encumbrance} pièces`;
   <body onload="roll_up_char(1, 'rando', 'Truc')">
     <div style="max-width:500px; margin:auto">
 		<img style="max-width:500px; margin:auto" src='https://cdn.shopify.com/s/files/1/0017/2330/1933/files/Website_Front_Page_-_OSE_Title_Banner_2048x.png'/>
-      <p style="font-family:'IM Fell DW Pica';text-align:justify;">Ces personnages sont pour <a href="https://oldschoolessentials.necroticgnome.com/srd/index.php/Main_Page">OSE</a> avec Niveau 1: Max PV, Clerc 1 sort/niv1, livre de sort modifié par l'intelligence</p>
-      <label for="level">Niveau: </label>
+      <p style="font-family:'Courier Prime';text-align:justify;monospace;font-size:0.77em;">Personnages pour <a href="https://oldschoolessentials.necroticgnome.com/srd/index.php/Main_Page">OSE</a> avec au niveau 1: Max PV, Clerc 1 sort/niv 1, livre de sort modifié par l'intelligence</p>
+      <label for="level" style="font-family:'Courier Prime';text-align:justify;monospace;font-size:0.77em;">Niveau: </label>
       <input type="number" name="level" id="level" value=1  style="width:3em">
-      <label for="classy">Classe: </label>
+      <label for="classy" style="font-family:'Courier Prime';text-align:justify;monospace;font-size:0.77em;">Classe: </label>
       <select name="classy" id="classy">
         <option value="rando">aléatoire</option>
         <option value="cleric">clerc</option>
@@ -691,10 +690,10 @@ ${this.encumbrance} pièces`;
         <option value="magic user">magicien</option>
         <option value="thief">voleur</option>
       </select>
-      <label for="name">Nom: </label>
+      <label for="name" style="font-family:'Courier Prime';text-align:justify;monospace;font-size:0.77em;">Nom: </label>
       <input type="text" name="name" id="name" value=Truc  style="width:6em">
-      <button onclick="roll_up_char(document.getElementById('level').value, document.getElementById('classy').value, document.getElementById('name').value)">Rouler</button>
-      <pre id="sheet" style="font-family: 'Courier Prime', monospace;font-size:0.87em;"></pre>
+      <button onclick="roll_up_char(document.getElementById('level').value, document.getElementById('classy').value, document.getElementById('name').value)">Rouler!</button>
+      <pre id="sheet" style="font-family: 'Courier Prime', monospace;font-size:0.87em;"/>
     </div>
     <script>
       function roll_up_char (level=1, cls='rando', name) {
