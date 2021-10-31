@@ -271,6 +271,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
       class Cleric {
         constructor(abis) {
           this.name = "Clerc";
+		  this.saves = {'MP':11, 'B':12, 'PP':14, 'S':16, 'SSB': 15};
 	  this.hd = 6;
 	  this.max_level = 14;
           this.xp_progression = [1500, 3000, 6000, 12000, 25000, 50000,
@@ -297,6 +298,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
         constructor(abis) {
 			if (abis.constitution < 9){abis.constitution = 9}
           this.name = "Nain";
+		  this.saves = {'MP':8, 'B':9, 'PP':10, 'S':13, 'SSB': 12};
 	  	  this.hd = 8;
 	  	  this.max_level = 12;
           this.xp_progression = [2200, 4400, 8800, 17000, 35000, 70000,
@@ -327,6 +329,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
         constructor(abis) {
 			if (abis.intelligence < 9){abis.intelligence = 9}
           this.name = "Elfe";
+		  this.saves = {'MP':12, 'B':13, 'PP':13, 'S':15, 'SSB': 15};
 	  this.hd = 6;
 	  this.max_level = 10;
           this.xp_progression = [4000, 8000, 16000, 32000, 64000, 120000,
@@ -351,6 +354,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
       class Fighter {
         constructor(abis) {
           this.name = "Guerrier";
+		  this.saves = {'MP':12, 'B':13, 'PP':14, 'S':15, 'SSB': 16};
 	  this.hd = 8;
 	  this.max_level = 14;
           this.xp_progression = [2000, 4000, 8000, 16000, 32000, 64000,
@@ -360,7 +364,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
                               12, 10, 10]
           this.post_name_level_hp_gain = 2;
           this.specs = wrap('Armures : toutes, boucliers compris, Armes : toutes, Enchainement: peut touchez plusieurs adversaires, Langues : langue d\’alignement, commun');
-          this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1' };
+          this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1'};
 		  this.xp_bonus = get_xp_bonus_single(abis.strength)
 		}
         class_equipment() {
@@ -383,6 +387,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 			if (abis.constitution < 9){abis.constitution = 9}
 			if (abis.dexterity < 9){abis.dexterity = 9}
           this.name = "Halfling";
+		  this.saves = {'MP':8,'B':9,'PP':10,'S':13, 'SSB': 12};
 	  this.hd = 6;
 	  this.max_level = 8;
           this.xp_progression = [2000, 4000, 8000, 16000, 32000, 64000,
@@ -408,6 +413,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
       class MagicUser {
         constructor(abis) {
           this.name = "Magicien";
+		  this.saves = {'MP':13, 'B':14, 'PP':13, 'S':16, 'SSB': 15};
 	  this.hd = 4;
 	  this.max_level = 14;
           this.xp_progression = [2500, 5000, 10000, 20000, 40000,
@@ -430,6 +436,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
       class Thief {
         constructor(abis) {
           this.name = "Voleur";
+		  this.saves = {'MP':13, 'B':14, 'PP':13, 'S':16, 'SSB': 15};
 	  this.hd = 4;
 	  this.max_level = 14;
           this.xp_progression = [1200, 2400, 4800, 9600, 20000, 40000,
@@ -692,9 +699,9 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           var statblock = this.abis.say_abis().split('\n');
           statblock[1] += `    DV: d${this.char_class.hd} / PV: ${this.hp}`;
           statblock[2] += `    CA: ${this.ac}`;
-          statblock[3] += `    Bonus (melee): ${this.melee_thac0}`;
-          statblock[4] += `    Bonus (distance): ${this.ranged_thac0}`;
-          statblock[5] += `    MOVEMENT: ${this.move}`;
+          statblock[3] += `    BONUS MELEE: ${this.melee_thac0}`;
+          statblock[4] += `    BONUS DISTANCE: ${this.ranged_thac0}`;
+          statblock[5] += `    DEPLACEMENT: ${this.move}`;
           statblock[6] += `    XP: ${this.xp} / Bonus: ${this.char_class.xp_bonus}`;
           var spells = '';
           if (this.char_class.name === 'Clerc') {
@@ -717,6 +724,9 @@ ${level_bit}Aparence: ${this.appearance}
 ${class_bit}Personalité: ${this.personality}
 ${statblock.join('\n')}
 
+JETS DE SAUVEGARDES:
+Mort ou poison:${this.char_class.saves['MP']}, Baguettes:${this.char_class.saves['B']}, Paralysie pétrification:${this.char_class.saves['PP']}
+Souffles:${this.char_class.saves['S']}, Sorts, sceptres et bâtons:${this.char_class.saves['SSB']}\n
 EXPLORATION:
 Ecouter aux portes: ${this.char_class.explo['EP']}-6, Ouverture des portes: ${this.char_class.explo['OP']}-6,
 Trouver portes secrètes: ${this.char_class.explo['PS']}-6, Trouver pièges de salle: ${this.char_class.explo['TP']}-6

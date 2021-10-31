@@ -1,7 +1,7 @@
 **TODO**
 
 - Exploration Skill kk
-- saves
+- saves kk
 - Prime req kk
 - Thief skill level up kk
 - langue sup kk
