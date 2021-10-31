@@ -18,6 +18,8 @@
                             'arc court (20 flèches)', 'fronde (30 pierres)',
                             'javelot'];
       var armor = ['cuir', 'cotte de mailles', 'armure de plates'];
+	  
+	  const skills_lvl1 = ['C','DS', 'DD','EP', 'PB', 'PP', 'SC']
 
       const encumbrances = {
         'hache de guerre': 50, 'gourdin': 50, 'arbalète (30 quarreaux)': 50, 'dague': 10,
@@ -437,10 +439,9 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
                               14, 12, 12]
           this.post_name_level_hp_gain = 2;
           this.specs = wrap('Armures : cuir, pas de bouclier. Armes : toutes. Quand il attaque par derrière un adversaire qui ne s’y attend pas, le voleur reçoit un bonus de +4 à l’attaque et double les dégâts infligés. Langues : langue d\’alignement, commun');
-          this.explo = {'EP': '2','OP':'0', 'PS': '1','TP':'1' };
+          this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1' };
 		  this.xp_bonus = get_xp_bonus_single(abis.dexterity)
-		  this.skills = {'C': 1,'DS':1, 'DD': 1,'EP':1, 'PB':2, 'PP':1, 'SC':1};
-		  var skills_lvl1 = ['C','DS', 'DD','EP', 'PB', 'PP', 'SC']
+		  this.skills = {'C': 1,'DS':1, 'DD': 1,'EP':1, 'PB':1, 'PP':1, 'SC':1};
 		  this.skills[choose(skills_lvl1)] ++
 		  this.skills[choose(skills_lvl1)] ++
 		  this.skills[choose(skills_lvl1)] ++
@@ -524,9 +525,20 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 		  'Protection from Evil',
 		  'Sommeil',
 		  'Ventriloquisme'],
-        ['continual light', 'detect evil', 'detect invisible', 'ESP',
-         'invisibility', 'knock', 'levitate', 'locate object', 'mirror image',
-         'phantasmal force', 'web', 'wizard lock'],
+		  
+        ['Détection de l\’invisible',
+'Détection du mal',
+'ESP',
+'Forces fantasmagoriques',
+'Image miroir',
+'Invisibilité',
+'Lévitation',
+'Locate Object',
+'Lumière éternelle (Ténèbres éternelles)',
+'Ouverture',
+'Toile d\’araignée',
+'Verrou magique'],
+		  
         ['clairvoyance', 'dispel magic', 'fireball', 'fly', 'haste', 'hold person',
          'infravistion', 'invisibility (10\' radius)', 'lightning bolt',
          'protection from evil (10\' radius)', 'protection from normal missiles',
@@ -602,6 +614,18 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
             }
             this.xp = this.char_class.xp_progression[this.level - 1]
             this.level += 1;
+			if (this.char_class.name == 'Voleur'){
+				var point = 0
+				while (point < 2){
+					var skill = choose(skills_lvl1)
+		  	  	  	if (this.char_class.skills[skill]<5)
+					{
+						this.char_class.skills[skill] ++;
+						point ++;
+					}
+				}
+		  	  
+			}
           }
         }
         generate_inventory() {
@@ -685,7 +709,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 		  var thief_skills = ''
 		  if ((this.char_class.name === 'Voleur') )
 		  {
-			  thief_skills =`\nTALENTS DE VOLEURS:\nCrochetage: ${this.char_class.skills['C']}-6\n`
+			  thief_skills =`\nTALENTS DE VOLEURS:\nCrochetage: ${this.char_class.skills['C']}-6, Détection des pièges de trésors: ${this.char_class.skills['DD']}-6\nDéplacement silencieux: ${this.char_class.skills['DS']}-6, Escalade de parois à pic: ${this.char_class.skills['EP']}-6\nPerception des bruits: ${this.char_class.skills['PB']}-6, Pickpocket: ${this.char_class.skills['PP']}-6\nSe cacher dans les ombres: ${this.char_class.skills['SC']}-6\n`
 		  }
           return `
 ${name_bit}Profession: ${this.background}
@@ -711,10 +735,10 @@ ${this.encumbrance} pièces`;
   </head>
   <body onload="roll_up_char(1, 'rando', 'Truc')">
     <div style="max-width:500px; margin:auto">
-	  <pre style="font-family:'Lakki Reddy';text-align:justify;font-size:1.2em;">Générateur de Personnages Basic b/x et autres jeux OSR</pre>
+	  <p style="font-family:'Lakki Reddy';text-align:justify;font-size:1.2em;">Générateur de Personnages Basic b/x et autres jeux OSR</p>
       <p style="font-family:'Courier Prime';text-align:justify;monospace;font-size:0.77em;">Compatible avec <a href="https://oldschoolessentials.necroticgnome.com/srd/index.php/Main_Page">OSE</a> avec au niveau 1: Max PV, Clerc 1 sort/niv 1, livre de sort modifié par l'intelligence et talents de voleurs d6</p>
       <label for="level" style="font-family:'Courier Prime';text-align:justify;monospace;font-size:0.77em;">Niveau: </label>
-      <input type="number" name="level" id="level" value=1  style="width:3em">
+      <input type="number" name="level" id="level" value=1  min="1" max="3" style="width:3em">
       <label for="classy" style="font-family:'Courier Prime';text-align:justify;monospace;font-size:0.77em;">Classe: </label>
       <select name="classy" id="classy">
         <option value="rando">aléatoire</option>
