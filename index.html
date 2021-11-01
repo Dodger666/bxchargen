@@ -350,7 +350,8 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.thaco_array = [20, 19, 19, 19, 19, 17, 17, 17, 17, 14, 14, 14,
                               14, 12, 12]
           this.post_name_level_hp_gain = 1;
-          this.specs = wrap('Armures : toutes, boucliers compris. Armes : toutes les armes contondantes. Magie Divine. Vade Retro. Langues : langue d\’alignement, commun');
+          this.specs = wrap('Armures : toutes, boucliers compris. Armes : toutes les armes contondantes. Magie Divine. Vade Retro.');
+		  this.languages = wrap('langue d\’alignement, commun')
 		  this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1' };
 		  this.xp_bonus = get_xp_bonus_single(abis.wisdom)
         }
@@ -377,7 +378,8 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.thaco_array = [20, 19, 19, 19, 17, 17, 17, 14, 14, 14,
                               12, 12, 12];
           this.post_name_level_hp_gain = 3;
-          this.specs = wrap('Armures : toutes, boucliers compris. Armes : petites ou normales uniquement. Infravistion (18m). Langues: langue d\’alignement, commun, nain, gnome, gobelin, kobold');
+          this.specs = wrap('Armures : toutes, boucliers compris. Armes : petites ou normales uniquement. Infravistion (18m).')
+		  this.languages = wrap('langue d\’alignement, commun, nain, gnome, gobelin, kobold');
 		  this.explo = {'EP': '2','OP':'0', 'PS':'2','TP':'2' };
 		  this.xp_bonus = get_xp_bonus_single(abis.strength)
 		}
@@ -408,8 +410,9 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
                                  250000, 400000, 600000];
           this.thaco_array = [20, 19, 19, 19, 17, 17, 17, 14, 14, 14, 12]
           this.post_name_level_hp_gain = 2;
-          this.specs = wrap('Magie Arcanique. Les elfes peuvent utiliser tous les types d’armes et d’armures. Immunité à la paralysie des goules. Infravision (18m). Langues : langue d\’alignement, commun, elfique, gnoll, hobgobelin, orque');
-          this.explo = {'EP': '2','OP':'0', 'PS':'2','TP':'1' };
+          this.specs = wrap('Magie Arcanique. Les elfes peuvent utiliser tous les types d’armes et d’armures. Immunité à la paralysie des goules. Infravision (18m).');
+          this.languages = wrap('langue d\’alignement, commun, elfique, gnoll, hobgobelin, orque');
+		  this.explo = {'EP': '2','OP':'0', 'PS':'2','TP':'1' };
 		  this.xp_bonus = get_xp_bonus_elf(abis.intelligence, abis.strength)
 		}
         class_equipment() {
@@ -436,8 +439,9 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.thaco_array = [20, 19, 19, 19, 17, 17, 17, 14, 14, 14, 12, 12,
                               12, 10, 10]
           this.post_name_level_hp_gain = 2;
-          this.specs = wrap('Armures : toutes, boucliers compris, Armes : toutes, Enchainement: peut touchez plusieurs adversaires, Langues : langue d\’alignement, commun');
-          this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1'};
+          this.specs = wrap('Armures : toutes, boucliers compris, Armes : toutes, Enchainement: peut touchez plusieurs adversaires.');
+          this.languages = wrap('langue d\’alignement, commun')
+		  this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1'};
 		  this.xp_bonus = get_xp_bonus_single(abis.strength)
 		}
         class_equipment() {
@@ -468,8 +472,9 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
                                  120000]
           this.thaco_array = [20, 19, 19, 19, 17, 17, 17, 14, 14, 14]
           this.post_name_level_hp_gain = 0;
-          this.specs = wrap('Armures : toutes (de tailles appropriées), bouclier compris. Armes : toutes (de taille appropriée). +2 en CA contre les grandes créature. 90% chance de se cacher dans les bois; 2-in-6 de se cacher dans l\'ombre en donjon. +1 aux jets d’attaque avec des projectiles. Langues : langue d\’alignement, commun, halfling');
-          this.explo = {'EP': '2','OP':'0', 'PS': '1','TP':'1' };
+          this.specs = wrap('Armures : toutes (de tailles appropriées), bouclier compris. Armes : toutes (de taille appropriée). +2 en CA contre les grandes créature. 90% chance de se cacher dans les bois; 2-in-6 de se cacher dans l\'ombre en donjon. +1 aux jets d’attaque avec des projectiles.');
+          this.languages = wrap('langue d\’alignement, commun, halfling')
+		  this.explo = {'EP': '2','OP':'0', 'PS': '1','TP':'1' };
 		  this.xp_bonus = get_xp_bonus_halfling(abis.dexterity, abis.strength)
 		}
         class_equipment() {
@@ -497,7 +502,8 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.thaco_array = [20, 19, 19, 19, 19, 19, 17, 17, 17, 17, 17, 14,
                               14, 14, 14]
           this.post_name_level_hp_gain = 1;
-          this.specs = wrap('Magie Arcanique. Armures : aucune. Armes : dagues, baton. Langues : langue d\’alignement, commun');
+          this.specs = wrap('Magie Arcanique. Armures : aucune. Armes : dagues, baton.');
+		   this.languages = wrap('langue d\’alignement, commun')
           this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1' };
 		  this.xp_bonus = get_xp_bonus_single(abis.intelligence)
 		}
@@ -521,8 +527,9 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.thaco_array = [20, 19, 19, 19, 19, 17, 17, 17, 17, 14, 14, 14,
                               14, 12, 12]
           this.post_name_level_hp_gain = 2;
-          this.specs = wrap('Armures : cuir, pas de bouclier. Armes : toutes. Quand il attaque par derrière un adversaire qui ne s’y attend pas, le voleur reçoit un bonus de +4 à l’attaque et double les dégâts infligés. Langues : langue d\’alignement, commun');
-          this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1' };
+          this.specs = wrap('Armures : cuir, pas de bouclier. Armes : toutes. Quand il attaque par derrière un adversaire qui ne s’y attend pas, le voleur reçoit un bonus de +4 à l’attaque et double les dégâts infligés.');
+          this.languages = wrap('langue d\’alignement, commun')
+		  this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1' };
 		  this.xp_bonus = get_xp_bonus_single(abis.dexterity)
 		  this.skills = {'C': 1,'DS':1, 'DD': 1,'EP':1, 'PB':1, 'PP':1, 'SC':1};
 		  this.skills[choose(skills_lvl1)] ++
@@ -803,6 +810,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 ${name_bit}Profession: ${this.background}
 ${level_bit}Apparence: ${this.appearance}
 ${class_bit}Personalité: ${this.personality}
+                       Alignement: ${choose(['chaotique', 'neutre', 'loyal'])}
 ${statblock.join('\n')}
 
 JETS DE SAUVEGARDES:
@@ -813,7 +821,9 @@ Ecouter aux portes: ${this.char_class.explo['EP']}-6, Ouverture des portes: ${th
 Trouver portes secrètes: ${this.char_class.explo['PS']}-6, Trouver pièges de salle: ${this.char_class.explo['TP']}-6
 ${thief_skills}
 ABILITES SPECIALES:
-${this.char_class.specs}${get_extra_languages(this.abis.intelligence, this.char_class.specs)}
+${this.char_class.specs}\n
+LANGUES:
+${this.char_class.languages}${get_extra_languages(this.abis.intelligence, this.char_class.specs)}
 ${spells}
 EQUIPEMENT:
 ${this.inventory}
