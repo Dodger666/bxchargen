@@ -755,7 +755,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
             var base_ac = 9;
           }
           if (this.inventory.includes('bouclier')) {
-            base_ac += 1;
+            base_ac -= 1;
           }
           return 19 - base_ac + Number(this.abis.dexmod);
         }
