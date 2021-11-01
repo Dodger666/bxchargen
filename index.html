@@ -745,13 +745,13 @@ ${this.encumbrance} pièces`;
   </head>
   <body onload="roll_up_char(1, 'rando', 'Truc')">
     <div style="max-width:500px; margin:auto">
-	  <p style="font-family:'Lakki Reddy';text-align:justify;font-size:1.2em;">Générateur de Personnages b/x et jeux OSR</p>
-      <pre style="font-family:'Courier Prime';text-align:justify;monospace;font-size:0.77em;">Compatible avec <a href="https://oldschoolessentials.necroticgnome.com/srd/index.php/Main_Page">OSE</a> avec au niveau 1: Max PV, Clerc 1 sort/niv 1,
-livre de sort modifié par l'intelligence et talents de voleurs d6</pre>
-<p>
-      <label for="level" style="font-family:'Courier Prime';text-align:justify;monospace;font-size:0.77em;">Niveau: </label>
+	  <p style="font-family:'Lakki Reddy';text-align:justify;font-size:1.2em;">Générateur de Personnages Basic b/x et jeux OSR</p>
+      <p style="font-family:'Courier Prime';text-align:justify;monospace;font-size:0.77em;">Compatible avec <a href="https://oldschoolessentials.necroticgnome.com/srd/index.php/Main_Page">OSE SRD</a> avec au niveau 1: Max PV, Clerc 1 sort/niv 1,
+livre de sort modifié par l'intelligence et talents de voleurs d6 (Carcass Crawler #1)</p>
+<p style="font-family:'Courier Prime';text-align:justify;monospace;font-size:0.77em;">
+      <label for="level">Niveau: </label>
       <input type="number" name="level" id="level" value=1  min="1" max="3" style="width:3em">
-      <label for="classy" style="font-family:'Courier Prime';text-align:justify;monospace;font-size:0.77em;">Classe: </label>
+      <label for="classy">Classe: </label>
       <select name="classy" id="classy">
         <option value="rando">aléatoire</option>
         <option value="cleric">clerc</option>
@@ -762,7 +762,7 @@ livre de sort modifié par l'intelligence et talents de voleurs d6</pre>
         <option value="magic user">magicien</option>
         <option value="thief">voleur</option>
       </select>
-      <label for="name" style="font-family:'Courier Prime';text-align:justify;monospace;font-size:0.77em;">Nom: </label>
+      <label for="name">Nom: </label>
       <input type="text" name="name" id="name" value=Truc  style="width:6em">
       <button onclick="roll_up_char(document.getElementById('level').value, document.getElementById('classy').value, document.getElementById('name').value)">Rouler!</button>
   </p>
