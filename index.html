@@ -693,7 +693,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.personality = get_personality();
           this.level = 1;
           this.xp = 0;
-          this.hp = this.char_class.hd + Number(this.abis.conmod);
+          this.hp = Math.max(d(1, this.char_class.hd) + Number(this.abis.conmod), 1);
           this.inventory = this.generate_inventory();
           this.appearance = get_appearance();
 		  this.explo_skills = this.char_class.explo
@@ -837,7 +837,7 @@ ${this.encumbrance} pièces`;
   <body onload="roll_up_char(1, 'rando', 'aléatoire')">
     <div style="max-width:500px; margin:auto">
 	  <p style="font-family:'Lakki Reddy';text-align:center;font-size:1.2em;">Générateur de Personnages Basic b/x et jeux OSR</p>
-      <p style="font-family: 'Courier Prime', monospace;font-size:0.77em;">Compatible <a href="https://oldschoolessentials.necroticgnome.com/srd/index.php/Main_Page">OSE SRD</a> avec au niveau 1: Max PV, Clerc 1 sort/niv 1,
+      <p style="font-family: 'Courier Prime', monospace;font-size:0.77em;">Compatible <a href="https://oldschoolessentials.necroticgnome.com/srd/index.php/Main_Page">OSE SRD</a> avec au niveau 1: Clerc 1 sort/niv 1,
 livre de sort modifié par l'intelligence et talents de voleurs d6 (Carcass Crawler #1)</p>
 <p style="font-family:'Courier Prime', monospace;font-size:0.77em;">
       <label for="level">Niveau: </label>
