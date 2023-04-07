@@ -529,13 +529,9 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
           this.post_name_level_hp_gain = 2;
           this.specs = wrap('Armures : cuir, pas de bouclier. Armes : toutes. Quand il attaque par derrière un adversaire qui ne s’y attend pas, le voleur reçoit un bonus de +4 à l’attaque et double les dégâts infligés.');
           this.languages = wrap('langue d\’alignement, commun')
-		  this.explo = {'EP': '1','OP':'0', 'PS': '1','TP':'1' };
+		  this.explo = {'EP': '2','OP':'0', 'PS': '1','TP':'1' };
 		  this.xp_bonus = get_xp_bonus_single(abis.dexterity)
-		  this.skills = {'C': 1,'DS':1, 'DD': 1,'EP':1, 'PB':1, 'PP':1, 'SC':1};
-		  this.skills[choose(skills_lvl1)] ++
-		  this.skills[choose(skills_lvl1)] ++
-		  this.skills[choose(skills_lvl1)] ++
-		  this.skills[choose(skills_lvl1)] ++
+		  this.skills = {'C': 15,'DS':20, 'DD': 10,'EP':87, 'PB':2, 'PP':20, 'SC':10};
 		}
         class_equipment() {
           var inv = ['outils de voleur', 'cuir'];
@@ -710,16 +706,15 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
             this.xp = this.char_class.xp_progression[this.level - 1]
             this.level += 1;
 			if (this.char_class.name == 'Voleur'){
-				var point = 0
-				while (point < 2){
-					var skill = choose(skills_lvl1)
-		  	  	  	if (this.char_class.skills[skill]<5)
-					{
-						this.char_class.skills[skill] ++;
-						point ++;
-					}
-				}
-		  	  
+		  	//  TODO level up thief skills
+                this.char_class.skills['C'] += 5;
+                this.char_class.skills['DS'] += 5;
+                this.char_class.skills['DD'] += 5;
+                this.char_class.skills['EP'] ++;
+                this.char_class.skills['PP'] += 5;
+                this.char_class.skills['SC'] += 5;
+                this.char_class.skills['PB'] = this.level==3?3:2;
+                this.explo_skills['EP']  = this.char_class.skills['PB'];
 			}
           }
         }
@@ -804,7 +799,7 @@ Charisme:     ${("  " + this.charisma).slice(-2)} ${this.chamod}`
 		  var thief_skills = ''
 		  if ((this.char_class.name === 'Voleur') )
 		  {
-			  thief_skills =`\nTALENTS DE VOLEURS:\nCrochetage: ${this.char_class.skills['C']}-6, Détection des pièges de trésors: ${this.char_class.skills['DD']}-6\nDéplacement silencieux: ${this.char_class.skills['DS']}-6, Escalade de parois à pic: ${this.char_class.skills['EP']}-6\nPerception des bruits: ${this.char_class.skills['PB']}-6, Pickpocket: ${this.char_class.skills['PP']}-6\nSe cacher dans les ombres: ${this.char_class.skills['SC']}-6\n`
+			  thief_skills =`\nTALENTS DE VOLEURS:\nCrochetage: ${this.char_class.skills['C']}%, Détection des pièges de trésors: ${this.char_class.skills['DD']}%\nDéplacement silencieux: ${this.char_class.skills['DS']}%, Escalade de parois à pic: ${this.char_class.skills['EP']}%\nPerception des bruits: ${this.char_class.skills['PB']}-6, Pickpocket: ${this.char_class.skills['PP']}%\nSe cacher dans les ombres: ${this.char_class.skills['SC']}%\n`
 		  }
           return `
 ${name_bit}Profession: ${this.background}
@@ -837,8 +832,8 @@ ${this.encumbrance} pièces`;
   <body onload="roll_up_char(1, 'rando', 'aléatoire')">
     <div style="max-width:500px; margin:auto">
 	  <p style="font-family:'Lakki Reddy';text-align:center;font-size:1.2em;">Générateur de Personnages Basic b/x et jeux OSR</p>
-      <p style="font-family: 'Courier Prime', monospace;font-size:0.77em;">Compatible <a href="https://oldschoolessentials.necroticgnome.com/srd/index.php/Main_Page">OSE SRD</a> avec au niveau 1: Clerc 1 sort/niv 1,
-livre de sort modifié par l'intelligence et talents de voleurs d6 (Carcass Crawler #1)</p>
+      <p style="font-family: 'Courier Prime', monospace;font-size:0.77em;">Compatible <a href="https://oldschoolessentials.necroticgnome.com/fr/srd/index.php/Main_Page">OSE SRD</a> avec au niveau 1: Clerc 1 sort/niv 1 et
+livre de sort modifié par l'intelligence pour les Magiciens</p>
 <p style="font-family:'Courier Prime', monospace;font-size:0.77em;">
       <label for="level">Niveau: </label>
 	  <select name="level" id="level"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>
