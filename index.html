@@ -159,12 +159,30 @@ function elf_name() {
         return Math.floor(Math.random() * (max - min + 1) ) + min;
       }
 
-      function d(how_many, sides){
+      function d(how_many, sides,){
         var total = 0;
         var i;
         for (i = 0; i < how_many; i++) {
           total += getRndInteger(1, sides);
         }
+        return total;
+      }
+	  function compareNumbers(a, b) {
+		return a - b;
+	  }
+	  function fourDiceDropLowest(){
+        var total = 0;
+        var arrRoll = [getRndInteger(1,6), getRndInteger(1,6), getRndInteger(1,6), getRndInteger(1,6)]
+		console.log(arrRoll)
+		arrRoll.sort(compareNumbers)
+		arrRoll.shift()
+		console.log(arrRoll)
+		arrRoll.forEach( num => {
+		  total += num;
+		})
+
+		console.log(total)
+		
         return total;
       }
 
@@ -283,12 +301,12 @@ function elf_name() {
 
       class Abilities {
         constructor () {
-          this.strength = d(3, 6);
-          this.dexterity = d(3, 6);
-          this.constitution = d(3, 6);
-          this.intelligence = d(3, 6);
-          this.wisdom = d(3, 6);
-          this.charisma = d(3, 6);
+          this.strength = fourDiceDropLowest();
+          this.dexterity = fourDiceDropLowest();
+          this.constitution = fourDiceDropLowest();
+          this.intelligence = fourDiceDropLowest();
+          this.wisdom = fourDiceDropLowest();
+          this.charisma = fourDiceDropLowest();
           this.mod = [null, null, null, '-3', '-2', '-2', '-1', '-1', 
                       '-1', '  ', '  ', '  ', '  ', '+1', '+1', '+1',
                       '+2', '+2', '+3'];
